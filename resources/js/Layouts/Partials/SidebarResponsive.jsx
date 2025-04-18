@@ -23,7 +23,7 @@ import {
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import NavLinkResponsive from '@/Components/NavLinkResponsive';
 
-export default function SidebarResponsive({url}) {
+export default function SidebarResponsive({url, auth}) {
     return (
         <nav className="grid gap-6 text-lg font-medium">
             <ApplicationLogo />
@@ -56,7 +56,7 @@ export default function SidebarResponsive({url}) {
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Lainnya</div>
                 <NavLinkResponsive url="#" title="Pengumuman" icon={IconAlertCircle} />
                 <NavLinkResponsive url={route('profile.edit')} title="Profile" icon={IconUser} />
-                <NavLinkResponsive url="#" title="LogOut" icon={IconLogout} />
+                <NavLinkResponsive url={route('logout')} title="LogOut" icon={IconLogout} method='post' as='button' className='w-full'/>
             </nav>
         </nav>
     );

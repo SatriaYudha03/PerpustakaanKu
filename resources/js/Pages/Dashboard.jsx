@@ -2,8 +2,10 @@ import AppLayout from "@/Layouts/AppLayout";
 
 export default function Dashboard() {
     return (
-        <AppLayout title="Dashboard">
-            Ini dashboard
-        </AppLayout>
+        <div>
+            ini dashboardd
+        </div>
     );
 }
+
+Dashboard.layout = (page) => <AppLayout children={page} title="Dashboard"/>
