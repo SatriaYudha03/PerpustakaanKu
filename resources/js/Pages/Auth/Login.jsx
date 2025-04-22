@@ -1,8 +1,5 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Alert, AlertDescription } from '@/Components/ui/alert';
 import { Button } from '@/Components/ui/button';
 import { Checkbox } from '@/Components/ui/checkbox';
@@ -45,8 +42,8 @@ export default function Login({ status, canResetPassword }) {
                         </div>
 
                         <form onSubmit={onHandleSubmit}>
-                            <div className='grid gap-4'>
-                                <div className='grid gap-2'>
+                            <div className="grid gap-4">
+                                <div className="grid gap-2">
                                     <Label htmlFor="email">Email</Label>
 
                                     <Input
@@ -54,22 +51,20 @@ export default function Login({ status, canResetPassword }) {
                                         type="email"
                                         name="email"
                                         value={data.email}
-                                        className="mt-1 block w-full"
                                         autoComplete="username"
-                                        isFocused={true}
                                         placeholder="madesatria@gmail.com"
                                         onChange={(e) => setData(e.target.name, e.target.value)}
                                     />
 
-                                    {errors.email && <inputError message={errors.email}/>}
+                                    {errors.email && <inputError message={errors.email} />}
                                 </div>
-                                <div className='grid gap-2'>
-                                    <div className='flex item-center'>
-                                        <Label htmlFor='password'>Password</Label>
+                                <div className="grid gap-2">
+                                    <div className="item-center flex">
+                                        <Label htmlFor="password">Password</Label>
                                         {canResetPassword && (
                                             <Link
                                                 href={route('password.request')}
-                                                className='inline-block ml-auto text-sm underline'
+                                                className="ml-auto inline-block text-sm underline"
                                             >
                                                 Lupa password?
                                             </Link>
@@ -83,35 +78,27 @@ export default function Login({ status, canResetPassword }) {
                                         value={data.password}
                                         onChange={(e) => setData(e.target.name, e.target.value)}
                                     />
-                                    {errors.password && (
-                                        <InputError message={errors.password}/>
-                                    )}
+                                    {errors.password && <InputError message={errors.password} />}
                                 </div>
-                                <div className='grid gap-2'>
-                                    <div className='items-top flex space-x-2'>
+                                <div className="grid gap-2">
+                                    <div className="items-top flex space-x-2">
                                         <Checkbox
                                             id="remember"
                                             name="remember"
                                             checked={data.remember}
                                             onCheckedChange={(checked) => setData('remember', checked)}
                                         />
-                                        <div className='grid gap-1.5 leading-none'>
-                                            <Label
-                                                htmlFor="remember"
-                                            >
-                                                Ingat Saya
-                                            </Label>
+                                        <div className="grid gap-1.5 leading-none">
+                                            <Label htmlFor="remember">Ingat Saya</Label>
                                         </div>
                                     </div>
-                                    {errors.remember && (
-                                        <InputError message={errors.remember}/>
-                                    )}
+                                    {errors.remember && <InputError message={errors.remember} />}
                                 </div>
                                 <Button
                                     type="submit"
                                     variant="orange"
                                     size="xl"
-                                    className='w-full'
+                                    className="w-full"
                                     disabled={processing}
                                 >
                                     Masuk
@@ -119,24 +106,20 @@ export default function Login({ status, canResetPassword }) {
                             </div>
                         </form>
 
-                        <div className='mt-4 text-center text-sm'>
+                        <div className="mt-4 text-center text-sm">
                             Belum punya akun? {''}
-                            <Link
-                                href={route('register')}
-                                className='underline'
-                            >
+                            <Link href={route('register')} className="underline">
                                 Daftar
                             </Link>
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div className='hidden bg-muted lg:block'>
+            <div className="hidden bg-muted lg:block">
                 <img
                     src="/images/login.webp"
                     alt="Login"
-                    className='h-full w-full object-cover dark:brightness-[0.4] dark:grayscale'
+                    className="h-full w-full object-cover dark:brightness-[0.4] dark:grayscale"
                 />
             </div>
         </div>
