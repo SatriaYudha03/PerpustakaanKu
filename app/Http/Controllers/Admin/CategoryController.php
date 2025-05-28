@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Traits\HasFile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Response;
 use Throwable;
 
@@ -61,6 +62,51 @@ class CategoryController extends Controller
         flashMessage(MessageType::CREATED->message($category->name));
 
         return to_route('admin.categories.index');
+        } catch (Throwable $e) {
+            flashMessage(MessageType::ERROR->message(error: $e->getMessage()), 'error');
+            return to_route('admin.categories.index');
+        }
+    }
+
+    public function edit(Category $category): Response
+    {
+        return inertia('Admin/Categories/Edit', [
+            'page_settings' => [
+                'title' => 'Edit Kategori',
+                'subtitle' => 'Edit kategori disini. Klik simpan setelah selesai',
+                'method' => 'PUT',
+                'action' => route('admin.categories.update', $category)
+            ],
+            'category' => $category
+        ]);
+    }
+
+    public function update (Category $category, CategoryRequest $request): RedirectResponse
+    {
+        try{
+            $category->update([
+                'name' => $name = $request->name,
+                'slug' => $name != $category->name ? str()->lower(str()->slug($name) . str()->random(4)) : $category-> slug,
+                'description' => $request->description,
+                'cover' => $this->update_file($request, $category, 'cover', 'categories'),
+            ]);
+
+            flashMessage(MessageType::UPDATED->message('Kategori'));
+            return to_route('admin.categories.index');
+
+        } catch (Throwable $e) {
+            flashMessage(MessageType::ERROR->message(error: $e->getMessage()), 'error');
+            return to_route('admin.categories.index');
+        }
+    }
+
+    public function destroy(Category $category): RedirectResponse
+    {
+        try{
+            $this->delete_file($category, 'cover');
+            $category->delete();
+            flashMessage(MessageType::DELETED->message('Kategori'));
+            return to_route('admin.categories.index');
         } catch (Throwable $e) {
             flashMessage(MessageType::ERROR->message(error: $e->getMessage()), 'error');
             return to_route('admin.categories.index');
