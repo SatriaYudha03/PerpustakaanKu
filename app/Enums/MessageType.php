@@ -15,6 +15,6 @@ enum MessageType: string
             return "{$this->value} {$error}";
         }
 
-        return "{$this->value} {entity}";
+        return "{$this->value} {$entity}";
     }
 }

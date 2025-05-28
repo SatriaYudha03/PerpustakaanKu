@@ -22,6 +22,10 @@ class CategoryController extends Controller
             ->select(['id', 'name', 'slug', 'cover', 'created_at'])
             ->get();
 
+            $categories->each(function ($category) {
+                $category->cover = 'storage/' . $category->cover;
+            });
+
             return inertia('Admin/Categories/Index', [
                 'categories'=> CategoryResource::collection($categories),
                 'page_settings' => [
@@ -47,14 +51,15 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request): RedirectResponse
     {
         try{
-            Category::create([
+             $category =Category::create([
                 'name' => $name = $request->name,
                 'slug' => str()->lower(str()->slug($name). str()->random(4)),
                 'description' => $request->description,
                 'cover' => $this->upload_file($request, 'cover', 'categories'),
             ]);
 
-        flashMessage(MessageType::CREATED->message('Kategori'));
+        flashMessage(MessageType::CREATED->message($category->name));
+
         return to_route('admin.categories.index');
         } catch (Throwable $e) {
             flashMessage(MessageType::ERROR->message(error: $e->getMessage()), 'error');

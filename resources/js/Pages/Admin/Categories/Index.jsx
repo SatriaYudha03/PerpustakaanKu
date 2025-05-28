@@ -43,53 +43,59 @@ export default function Index(props){
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {props.categories.map((category, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>{ index + 1 }</TableCell>
-                                    <TableCell>{category.name}</TableCell>
-                                    <TableCell>{category.slug}</TableCell>
-                                    <TableCell>
-                                        <Avatar>
-                                            <AvatarImage src={category.cover}></AvatarImage>
-                                            <AvatarFallback>{category.name.substring(0,1)}</AvatarFallback>
-                                        </Avatar>
-                                    </TableCell>
-                                    <TableCell>{category.created_at}</TableCell>
-                                    <TableCell>
-                                        <div className="flex items-center gap-x-1">
-                                            <Button variant="blue" size="sm" asChild>
-                                                <Link href={route('admin.categories.edit', [category])}>
-                                                    <IconPencil className="size-4"/>
-                                                </Link>
-                                            </Button>
-                                            <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                    <Button variant="red" size="sm">
-                                                        <IconTrash size="4"/>
-                                                    </Button>
-                                                </AlertDialogTrigger>
-                                                <AlertDialogContent>
-                                                    <AlertDialogHeader>
-                                                        <AlertDialogTitle>
-                                                            Apakah anda benar-benar yakin?
-                                                        </AlertDialogTitle>
-                                                        <AlertDialogDescription>
-                                                            Tidakan ini tidak dapat dibatalkan. Tindakan ini akan menghapus data secara permanen.
-                                                        </AlertDialogDescription>
-                                                    </AlertDialogHeader>
-                                                    <AlertDialogFooter>
-                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                        <AlertDialogAction onClick={() => console.log('hapus kategori')}>
-                                                            Continue
-                                                        </AlertDialogAction>
-                                                    </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                            </AlertDialog>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
+    {props.categories.map((category, index) => {
+        // Menambahkan log untuk memeriksa nilai category.cover
+        console.log(category.cover);  // Memeriksa URL gambar
+
+        return (
+            <TableRow key={index}>
+                <TableCell>{ index + 1 }</TableCell>
+                <TableCell>{category.name}</TableCell>
+                <TableCell>{category.slug}</TableCell>
+                <TableCell>
+                    <Avatar>
+                        <AvatarImage src={category.cover}></AvatarImage>
+                        <AvatarFallback>{category.name.substring(0, 1)}</AvatarFallback>
+                    </Avatar>
+                </TableCell>
+                <TableCell>{category.created_at}</TableCell>
+                <TableCell>
+                    <div className="flex items-center gap-x-1">
+                        <Button variant="blue" size="sm" asChild>
+                            <Link href={route('admin.categories.edit', [category])}>
+                                <IconPencil className="size-4"/>
+                            </Link>
+                        </Button>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="red" size="sm">
+                                    <IconTrash size="4"/>
+                                </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                        Apakah anda benar-benar yakin?
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        Tidakan ini tidak dapat dibatalkan. Tindakan ini akan menghapus data secara permanen.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => console.log('hapus kategori')}>
+                                        Continue
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                    </div>
+                </TableCell>
+            </TableRow>
+        );
+    })}
+</TableBody>
+
                     </Table>
                 </CardContent>
             </Card>
