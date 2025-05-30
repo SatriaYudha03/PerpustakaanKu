@@ -21,13 +21,10 @@ class CategoryController extends Controller
     {
         $categories = Category::query()
             ->select(['id', 'name', 'slug', 'cover', 'created_at'])
-            ->when(request()->search, function($query, $value){
-                $query->whereAny([
-                    'name',
-                    'slug',
-                ], 'REGEXP', $value);
-            })
-            ->paginate(10);
+            ->filter(request()->only(['search']))
+            ->sorting(request()->only(['field', 'direction']))
+            ->paginate(request()->load ?? 10)
+            ->withQueryString();
 
             $categories->each(function ($category) {
                 $category->cover = 'storage/' . $category->cover;
@@ -46,6 +43,7 @@ class CategoryController extends Controller
                 'state' => [
                     'page' => request()->page ?? 1,
                     'search' => request()->search ?? '',
+                    'load' => 10,
                 ]
             ]);
     }
