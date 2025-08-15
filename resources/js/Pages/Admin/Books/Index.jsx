@@ -10,6 +10,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
+import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
@@ -20,19 +21,12 @@ import { UseFilter } from '@/hooks/useFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, router } from '@inertiajs/react';
-import {
-    IconArrowsDownUp,
-    IconBuildingCommunity,
-    IconPencil,
-    IconPlus,
-    IconRefresh,
-    IconTrash,
-} from '@tabler/icons-react';
+import { IconArrowsDownUp, IconBooks, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
 export default function Index(props) {
-    const { data: publishers, meta } = props.publishers;
+    const { data: books, meta } = props.books;
     const [params, setParams] = useState(props.state);
 
     const onSortable = (field) => {
@@ -44,9 +38,9 @@ export default function Index(props) {
     };
 
     UseFilter({
-        route: route('admin.publishers.index'),
+        route: route('admin.books.index'),
         values: params,
-        only: ['publishers'],
+        only: ['books'],
     });
 
     return (
@@ -55,10 +49,10 @@ export default function Index(props) {
                 <HeaderTitle
                     title={props.page_settings.title}
                     subtitle={props.page_settings.subtitle}
-                    icon={IconBuildingCommunity}
+                    icon={IconBooks}
                 />
                 <Button variant="orange" size="lg" asChild>
-                    <Link href={route('admin.publishers.create')}>
+                    <Link href={route('admin.books.create')}>
                         <IconPlus className="size-4" />
                         Tambah
                     </Link>
@@ -72,7 +66,7 @@ export default function Index(props) {
                             className="w-full sm:w-1/4"
                             placeholder="Search..."
                             value={params?.search}
-                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value, page: 1 }))}
+                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value }))}
                         />
                         <Select value={params?.load} onValueChange={(e) => setParams({ ...params, load: e })}>
                             <SelectTrigger className="w-full sm:w-24">
@@ -112,9 +106,9 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('name')}
+                                        onClick={() => onSortable('book_code')}
                                     >
-                                        Nama
+                                        Kode Buku
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
@@ -124,9 +118,9 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('address')}
+                                        onClick={() => onSortable('title')}
                                     >
-                                        Alamat
+                                        Judul
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
@@ -136,9 +130,22 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('email')}
+                                        onClick={() => onSortable('author')}
                                     >
-                                        Email
+                                        Penulis
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>Stok</TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('publication_year')}
+                                    >
+                                        Tahun Publikasi
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
@@ -148,9 +155,82 @@ export default function Index(props) {
                                     <Button
                                         variant="ghost"
                                         className="group inline-flex"
-                                        onClick={() => onSortable('phone')}
+                                        onClick={() => onSortable('isbn')}
                                     >
-                                        Nomor Telepon
+                                        ISBN
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('language')}
+                                    >
+                                        Bahasa
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('number_of_pages')}
+                                    >
+                                        Jumlah Halaman
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('status')}
+                                    >
+                                        Status
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('price')}
+                                    >
+                                        Harga
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>Cover</TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('category_id')}
+                                    >
+                                        Kategori
+                                        <span className="ml-2 flex-none rounded text-muted-foreground">
+                                            <IconArrowsDownUp className="size-4 text-muted-foreground" />
+                                        </span>
+                                    </Button>
+                                </TableHead>
+                                <TableHead>
+                                    <Button
+                                        variant="ghost"
+                                        className="group inline-flex"
+                                        onClick={() => onSortable('publisher_id')}
+                                    >
+                                        Penerbit
                                         <span className="ml-2 flex-none rounded text-muted-foreground">
                                             <IconArrowsDownUp className="size-4 text-muted-foreground" />
                                         </span>
@@ -172,22 +252,36 @@ export default function Index(props) {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {publishers.map((publisher, index) => {
-                                // Menambahkan log untuk memeriksa nilai publisher.cover
-                                // console.log(publisher.cover);  // Memeriksa URL gambar
+                            {books.map((book, index) => {
+                                // Menambahkan log untuk memeriksa nilai category.cover
+                                // console.log(category.cover);  // Memeriksa URL gambar
 
                                 return (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                        <TableCell>{publisher.name}</TableCell>
-                                        <TableCell>{publisher.address}</TableCell>
-                                        <TableCell>{publisher.email}</TableCell>
-                                        <TableCell>{publisher.phone}</TableCell>
-                                        <TableCell>{publisher.created_at}</TableCell>
+                                        <TableCell>{book.book_code}</TableCell>
+                                        <TableCell>{book.title}</TableCell>
+                                        <TableCell>{book.author}</TableCell>
+                                        <TableCell>{book.stock.total}</TableCell>
+                                        <TableCell>{book.publication_year}</TableCell>
+                                        <TableCell>{book.isbn}</TableCell>
+                                        <TableCell>{book.language}</TableCell>
+                                        <TableCell>{book.number_of_pages}</TableCell>
+                                        <TableCell>{book.status}</TableCell>
+                                        <TableCell>Rp. {book.price}</TableCell>
+                                        <TableCell>
+                                            <Avatar>
+                                                <AvatarImage src={book.cover} />
+                                                <AvatarFallback>{book.title.substring(0, 1)}</AvatarFallback>
+                                            </Avatar>
+                                        </TableCell>
+                                        <TableCell>Rp. {book.category.name}</TableCell>
+                                        <TableCell>Rp. {book.publisher.name}</TableCell>
+                                        <TableCell>{book.created_at}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant="blue" size="sm" asChild>
-                                                    <Link href={route('admin.publishers.edit', [publisher])}>
+                                                    <Link href={route('admin.books.edit', [book])}>
                                                         <IconPencil className="size-4" />
                                                     </Link>
                                                 </Button>
@@ -212,7 +306,7 @@ export default function Index(props) {
                                                             <AlertDialogAction
                                                                 onClick={() =>
                                                                     router.delete(
-                                                                        route('admin.publishers.destroy', [publisher]),
+                                                                        route('admin.books.destroy', [book]),
                                                                         {
                                                                             preserveScroll: true,
                                                                             preserveState: true,
@@ -241,7 +335,7 @@ export default function Index(props) {
                 <CardFooter className="flex w-full flex-col items-center justify-between border-t py-2 lg:flex-row">
                     <p className="mb-2 text-sm text-muted-foreground">
                         Menampilkan <span className="font-medium text-orange-500">{meta.from ?? 0}</span> dari{' '}
-                        {meta.total} penerbit
+                        {meta.total} buku
                     </p>
                     <div className="overflow-x-auto">
                         {meta.has_pages && (

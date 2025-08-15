@@ -1,9 +1,5 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Alert, AlertDescription } from '@/Components/ui/alert';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
@@ -18,7 +14,7 @@ export default function Register() {
         password_confirmation: '',
     });
 
-    const onHandleChange = (e) => setData(e.target.name, e.target.value)
+    const onHandleChange = (e) => setData(e.target.name, e.target.value);
 
     const submit = (e) => {
         e.preventDefault();
@@ -37,13 +33,13 @@ export default function Register() {
                         <div className="grid gap-2 text-center">
                             <h1 className="text-3xl font-bold">Daftar</h1>
                             <p className="text-balance text-muted-foreground">
-                               Masukkan informasi anda untuk membuat akun
+                                Masukkan informasi anda untuk membuat akun
                             </p>
                         </div>
 
                         <form onSubmit={submit}>
-                            <div className='grid gap-4'>
-                                <div className='grid gap-2'>
+                            <div className="grid gap-4">
+                                <div className="grid gap-2">
                                     <Label htmlFor="name">Nama</Label>
 
                                     <Input
@@ -54,12 +50,10 @@ export default function Register() {
                                         onChange={onHandleChange}
                                     />
 
-                                    {errors.name && (
-                                        <InputError message={errors.name}/>
-                                    )}
+                                    {errors.name && <InputError message={errors.name} />}
                                 </div>
 
-                                <div className='grid gap-2'>
+                                <div className="grid gap-2">
                                     <Label htmlFor="email">Email</Label>
 
                                     <Input
@@ -71,12 +65,10 @@ export default function Register() {
                                         onChange={onHandleChange}
                                     />
 
-                                    {errors.email && (
-                                        <InputError message={errors.email}/>
-                                    )}
+                                    {errors.email && <InputError message={errors.email} />}
                                 </div>
 
-                                <div className='grid gap-2'>
+                                <div className="grid gap-2">
                                     <Label htmlFor="password">Password</Label>
 
                                     <Input
@@ -89,11 +81,11 @@ export default function Register() {
                                     />
 
                                     {errors.password_confirmation && (
-                                        <InputError message={errors.password_confirmation}/>
+                                        <InputError message={errors.password_confirmation} />
                                     )}
                                 </div>
 
-                                <div className='grid gap-2'>
+                                <div className="grid gap-2">
                                     <Label htmlFor="password_confirmation">Konfirmasi Password</Label>
 
                                     <Input
@@ -105,19 +97,17 @@ export default function Register() {
                                         onChange={onHandleChange}
                                     />
 
-                                    {errors.password && (
-                                        <InputError message={errors.password}/>
-                                    )}
+                                    {errors.password && <InputError message={errors.password} />}
                                 </div>
                                 <Button
-                                type="submit"
-                                variant="orange"
-                                size="xl"
-                                className="w-full"
-                                disabled={processing}
-                            >
-                                Daftar
-                            </Button>
+                                    type="submit"
+                                    variant="orange"
+                                    size="xl"
+                                    className="w-full"
+                                    disabled={processing}
+                                >
+                                    Daftar
+                                </Button>
                             </div>
                         </form>
 

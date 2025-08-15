@@ -1,10 +1,10 @@
-import { useCallback, useEffect } from "react";
+import { router } from '@inertiajs/react';
 import pkg from 'lodash';
-import { router } from "@inertiajs/react";
+import { useCallback, useEffect } from 'react';
 
-export function UseFilter({route, values, only, wait = 300}){
-    const { debounce, pickBy} = pkg;
-    const reload = useCallback (
+export function UseFilter({ route, values, only, wait = 300 }) {
+    const { debounce, pickBy } = pkg;
+    const reload = useCallback(
         debounce((query) => {
             router.get(route, pickBy(query), {
                 only: only,
@@ -14,8 +14,8 @@ export function UseFilter({route, values, only, wait = 300}){
         }, wait),
         [],
     );
-    
-    useEffect(()=> reload(values), [values, reload]);
 
-    return{values};
+    useEffect(() => reload(values), [values, reload]);
+
+    return { values };
 }
