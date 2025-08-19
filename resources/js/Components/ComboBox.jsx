@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
+import { IconChevronDown, IconCheck } from '@tabler/icons-react'; // ✅ hanya Tabler
 import { useState } from 'react';
 
 export default function ComboBox({ items, selectedItem, onSelect, placeholder = 'Pilih item...' }) {
@@ -17,8 +17,8 @@ export default function ComboBox({ items, selectedItem, onSelect, placeholder = 
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
-                    {items.find((item) => item.label == selectedItem)?.label ?? 'Pilih item'}
-                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    {items.find((item) => item.label === selectedItem)?.label ?? 'Pilih item'}
+                    <IconChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent
@@ -33,7 +33,7 @@ export default function ComboBox({ items, selectedItem, onSelect, placeholder = 
                             {items.map((item, index) => (
                                 <CommandItem key={index} value={item.value} onSelect={(value) => handleSelect(value)}>
                                     {item.label}
-                                    <CheckIcon
+                                    <IconCheck
                                         className={cn(
                                             'ml-auto h-4 w-4',
                                             selectedItem === item.label ? 'opacity-100' : 'opacity-0',
