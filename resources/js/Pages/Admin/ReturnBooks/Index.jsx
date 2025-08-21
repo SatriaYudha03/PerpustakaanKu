@@ -21,7 +21,7 @@ import { UseFilter } from '@/hooks/useFilter';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage, formatToRupiah } from '@/lib/utils';
 import { Link, router } from '@inertiajs/react';
-import { IconArrowsDownUp, IconCategory, IconCreditCardRefund, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
+import { IconArrowsDownUp, IconCategory, IconCreditCardRefund, IconEye, IconPencil, IconPlus, IconRefresh, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -211,9 +211,6 @@ export default function Index(props) {
                         </TableHeader>
                         <TableBody>
                             {return_books.map((return_book, index) => {
-                                // Menambahkan log untuk memeriksa nilai return_book.cover
-                                // console.log(return_book.cover);  // Memeriksa URL gambar
-
                                 return (
                                     <TableRow key={index}>
                                         <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
@@ -225,11 +222,19 @@ export default function Index(props) {
                                         <TableCell>{return_book.loan.loan_date}</TableCell>
                                         <TableCell>{return_book.loan.due_date}</TableCell>
                                         <TableCell>{return_book.return_date}</TableCell>
-                                        <TableCell>0</TableCell>
+                                        <TableCell> {formatToRupiah(Number(return_book.fine?.total_fee ?? return_book.fine ?? 0))}</TableCell>
                                         <TableCell>{return_book.return_book_check}</TableCell>
                                         <TableCell>{return_book.created_at}</TableCell>
                                         <TableCell className='text-red-500'>
-                                            {formatToRupiah(return_book.fine)}
+                                            <div className='flex items-center gap-x-1'>
+                                                {return_book.fine && (
+                                                    <Button variant="blue" size="sm" asChild>
+                                                        <Link href={route('admin.fines.create', [return_book])}>
+                                                            <IconEye className='size-4'/>
+                                                        </Link>
+                                                    </Button>
+                                                )}
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 );
