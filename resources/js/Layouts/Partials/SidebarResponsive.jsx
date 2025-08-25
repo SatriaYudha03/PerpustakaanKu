@@ -75,7 +75,7 @@ export default function SidebarResponsive({ url, auth }) {
 
                 <div className="px-3 py-2 text-sm font-semibold text-foreground">Lainnya</div>
                 <NavLinkResponsive url={route('admin.announcements.index')} active={url.startsWith('/admin/announcements')} title="Pengumuman" icon={IconAlertCircle} />
-                <NavLinkResponsive url={route('profile.edit')} title="Profile" icon={IconUser} />
+                <NavLinkResponsive url={route('profile.edit')} active={url.startsWith('/admin/profile')} title="Profile" icon={IconUser} />
                 <NavLinkResponsive
                     url={route('logout')}
                     title="LogOut"
