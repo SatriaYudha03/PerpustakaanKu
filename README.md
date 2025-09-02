@@ -20,8 +20,7 @@ Berikut beberapa tampilan aplikasi:
 
 1. **Clone repository**
    ```sh
-   git clone <url-repo-anda>
-   cd <nama-folder-repo>
+   git clone https://github.com/SatriaYudha03/PerpustakaanKu
    ```
 
 2. **Copy file environment**
